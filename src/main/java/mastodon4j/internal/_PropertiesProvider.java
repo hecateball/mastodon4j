@@ -2,10 +2,17 @@ package mastodon4j.internal;
 
 import com.google.inject.Provider;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Properties;
@@ -26,30 +33,29 @@ class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> 
             = Arrays.asList("mastodon4j.properties", "mastodon4j.net.properties");
 
     static {
-        URL mastodonLocation = Mastodon.class.getProtectionDomain().getCodeSource().getLocation();
-        _PropertiesProvider.loadProperties(new File(mastodonLocation.getFile()).listFiles());
-        URL location = Thread.currentThread().getContextClassLoader().getResource(".");
-        _PropertiesProvider.loadProperties(new File(location.getFile()).listFiles());
-        PROPERTIES.forEach((key, value) -> LOGGER.debug("{}: {}", key, value));
-    }
-
-    private static void loadProperties(File[] files) {
-        if (files == null) {
-            return;
-        }
-        for (File file : files) {
-            if (file.isDirectory()) {
-                loadProperties(file.listFiles());
-            }
-            if (file.isFile() && PROPERTIES_FILES.contains(file.getName())) {
-                try (InputStream inputStream = new FileInputStream(file)) {
-                    PROPERTIES.load(inputStream);
-                    LOGGER.info("Loaded properties:\t{}", file.getName());
-                } catch (IOException exception) {
-                    LOGGER.error(exception.getMessage(), exception);
+        FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) throws IOException {
+                File file = path.toFile();
+                if (file.isFile() && PROPERTIES_FILES.contains(file.getName())) {
+                    try (InputStream inputStream = Files.newInputStream(path, StandardOpenOption.READ)) {
+                        PROPERTIES.load(inputStream);
+                        LOGGER.info("Loaded properties:\t{}", file.getName());
+                    }
                 }
+                return FileVisitResult.CONTINUE;
             }
+        };
+        try {
+            URL mastodonLocation = Mastodon.class.getProtectionDomain().getCodeSource().getLocation();
+            Files.walkFileTree(Paths.get(mastodonLocation.getPath()), visitor);
+            URL location = Thread.currentThread().getContextClassLoader().getResource(".");
+            Files.walkFileTree(Paths.get(location.getPath()), visitor);
+        } catch (IOException exception) {
+            LOGGER.warn("Exception while loading properties", exception);
         }
+        PROPERTIES.forEach((key, value) -> LOGGER.debug("{}: {}", key, value));
+
     }
 
     @Override
