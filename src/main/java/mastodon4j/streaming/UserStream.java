@@ -20,7 +20,7 @@ public class UserStream {
 
     public void register(UserStreamListener listener) {
         this.eventSource.register(event -> {
-            LOGGER.debug("{}: {}", event.getName(), event.readData());
+            LOGGER.trace("{}: {}", event.getName(), event.readData());
             switch (event.getName()) {
                 case "update":
                     listener.onUpdate(event.readData(Status.class));
@@ -32,7 +32,7 @@ public class UserStream {
                     listener.onDelete(event.readData(Long.class));
                     break;
                 default:
-                    LOGGER.debug("Unexpected event name: {}", event.getName());
+                    LOGGER.trace("Unexpected event name: {}", event.getName());
             }
         });
     }

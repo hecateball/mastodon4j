@@ -17,8 +17,8 @@ class _HostnameVerifierProvider implements Provider<HostnameVerifier>, Supplier<
     @Override
     public HostnameVerifier get() {
         return (hostname, session) -> {
-            _HostnameVerifierProvider.LOGGER.debug("hostname:\t{}", hostname);
-            _HostnameVerifierProvider.LOGGER.debug("session:\t{}", session.toString());
+            _HostnameVerifierProvider.LOGGER.trace("hostname:\t{}", hostname);
+            _HostnameVerifierProvider.LOGGER.trace("session:\t{}", session.toString());
             return true;
         };
     }

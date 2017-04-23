@@ -54,7 +54,7 @@ class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> 
         } catch (IOException exception) {
             LOGGER.warn("Exception while loading properties", exception);
         }
-        PROPERTIES.forEach((key, value) -> LOGGER.debug("{}: {}", key, value));
+        PROPERTIES.forEach((key, value) -> LOGGER.trace("{}: {}", key, value));
 
     }
 
