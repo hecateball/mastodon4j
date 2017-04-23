@@ -21,7 +21,6 @@ class _PublicStream implements PublicStream {
     @Override
     public void register(PublicStreamListener listener) {
         this.eventSource.register(event -> {
-            LOGGER.trace("{}: {}", event.getName(), event.readData());
             switch (event.getName()) {
                 case "update":
                     listener.onUpdate(event.readData(Status.class));
