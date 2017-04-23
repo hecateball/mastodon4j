@@ -1,6 +1,7 @@
 package mastodon4j.internal;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import mastodon4j.Mastodon;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
@@ -36,6 +37,7 @@ import mastodon4j.entity.Status;
  *
  * @author hecateball
  */
+@Singleton
 class _Mastodon implements Mastodon {
 
     @Inject

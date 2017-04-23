@@ -3,6 +3,7 @@ package mastodon4j.internal.api;
 import com.google.inject.AbstractModule;
 import mastodon4j.api.AppsResource;
 import mastodon4j.api.OauthResource;
+import mastodon4j.api.StreamingResource;
 
 /**
  *
@@ -15,6 +16,7 @@ public class __InternalAPIModule extends AbstractModule {
         // API Resources
         bind(AppsResource.class).to(_AppsResource.class);
         bind(OauthResource.class).to(_OauthResource.class);
+        bind(StreamingResource.class).to(_StreamingResource.class);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
+import mastodon4j.Mastodon;
 import org.glassfish.jersey.client.ClientConfig;
 
 /**
@@ -18,7 +19,7 @@ public class __InternalModule extends AbstractModule {
         // System properties
         bind(Properties.class).toProvider(_PropertiesProvider.class);
         // Mastodon instance
-        //bind(Mastodon.class).to(_Mastodon.class);
+        bind(Mastodon.class).to(_Mastodon.class);
 
         // REST API Clients
         bind(Client.class).toProvider(_ClientProvider.class);

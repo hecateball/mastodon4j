@@ -1,5 +1,8 @@
 package mastodon4j;
 
+import com.google.inject.Guice;
+import mastodon4j.internal.__InternalModule;
+import mastodon4j.internal.api.__InternalAPIModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +17,9 @@ public final class MastodonFactory {
     private MastodonFactory() {
     }
 
-    public static Mastodon getInstance() throws Exception {
-        return MastodonFactory.createInstance();
+    public static Mastodon getInstance() {
+        return Guice.createInjector(new __InternalModule(), new __InternalAPIModule())
+                .getInstance(Mastodon.class);
     }
 
     private static Mastodon createInstance() {
