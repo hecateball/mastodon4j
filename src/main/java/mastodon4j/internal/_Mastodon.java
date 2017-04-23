@@ -32,6 +32,7 @@ import mastodon4j.entity.Relationship;
 import mastodon4j.entity.Report;
 import mastodon4j.entity.Results;
 import mastodon4j.entity.Status;
+import mastodon4j.streaming.UserStream;
 
 /**
  *
@@ -467,8 +468,8 @@ class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public void userEvents() {
-        this.streaming().userEvents();
+    public UserStream userEvents() {
+        return this.streaming().userEvents();
     }
 
     /**
