@@ -27,7 +27,7 @@ class _HashtagStream implements HashtagStream {
                     listener.onUpdate(event.readData(Status.class));
                     break;
                 case "notification":
-                    // Public stream might not receive notification
+                    // Hashtag stream might not receive notification
                     break;
                 case "delete":
                     listener.onDelete(event.readData(Long.class));
