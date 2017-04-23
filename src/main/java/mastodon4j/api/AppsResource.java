@@ -1,6 +1,6 @@
 package mastodon4j.api;
 
-import mastodon4j.entity.App;
+import mastodon4j.entity.Application;
 import mastodon4j.entity.ClientCredential;
 
 /**
@@ -21,6 +21,6 @@ public interface AppsResource {
      * values should be requested in the app itself from the API for each new app install + mastodon domain combo, and
      * stored in the app for future requests.
      */
-    public ClientCredential registerApplication(App app, String redirectUris, String scopes);
+    public ClientCredential registerApplication(Application app, String redirectUris, String scopes);
 
 }

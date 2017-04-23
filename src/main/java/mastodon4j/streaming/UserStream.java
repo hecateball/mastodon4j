@@ -1,5 +1,6 @@
 package mastodon4j.streaming;
 
+import mastodon4j.entity.Status;
 import org.glassfish.jersey.media.sse.EventSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-public class UserStream implements AutoCloseable {
+public class UserStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserStream.class);
     private final EventSource eventSource;
@@ -22,7 +23,7 @@ public class UserStream implements AutoCloseable {
             LOGGER.debug("{}: {}", event.getName(), event.readData());
             switch (event.getName()) {
                 case "update":
-                    //this.listeners.forEach(listener -> listener.onDelete(Long.parseLong(event.readData())));
+                    listener.onUpdate(event.readData(Status.class));
                     break;
                 case "notification":
                     //this.listeners.forEach(listener -> listener.onDelete(Long.parseLong(event.readData())));
@@ -43,7 +44,6 @@ public class UserStream implements AutoCloseable {
 
     }
 
-    @Override
     public void close() {
         if (this.eventSource.isOpen()) {
             this.eventSource.close();

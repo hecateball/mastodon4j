@@ -21,7 +21,7 @@ import mastodon4j.api.StreamingResource;
 import mastodon4j.api.TimelinesResource;
 import mastodon4j.entity.AccessToken;
 import mastodon4j.entity.Account;
-import mastodon4j.entity.App;
+import mastodon4j.entity.Application;
 import mastodon4j.entity.Attachment;
 import mastodon4j.entity.Card;
 import mastodon4j.entity.ClientCredential;
@@ -244,7 +244,7 @@ class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public ClientCredential registerApplication(App app, String redirectUris, String scopes) {
+    public ClientCredential registerApplication(Application app, String redirectUris, String scopes) {
         return this.apps().registerApplication(app, redirectUris, scopes);
     }
 

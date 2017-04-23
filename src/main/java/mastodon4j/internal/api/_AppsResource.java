@@ -7,7 +7,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import mastodon4j.api.AppsResource;
-import mastodon4j.entity.App;
+import mastodon4j.entity.Application;
 import mastodon4j.entity.ClientCredential;
 
 /**
@@ -25,13 +25,13 @@ class _AppsResource implements AppsResource {
      * {@inheritDoc}
      */
     @Override
-    public ClientCredential registerApplication(App app, String redirectUris, String scopes) {
+    public ClientCredential registerApplication(Application application, String redirectUris, String scopes) {
         Form form = new Form();
-        form.param("client_name", app.getName())
+        form.param("client_name", application.getName())
                 .param("redirect_uris", redirectUris)
                 .param("scopes", scopes);
-        if (app.getWebsite() != null && !app.getWebsite().isEmpty()) {
-            form.param("website", app.getWebsite());
+        if (application.getWebsite() != null && !application.getWebsite().isEmpty()) {
+            form.param("website", application.getWebsite());
         }
 
         return this.client

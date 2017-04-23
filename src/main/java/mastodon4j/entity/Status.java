@@ -3,6 +3,7 @@ package mastodon4j.entity;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,26 +15,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Status implements Serializable {
 
     private static final long serialVersionUID = -5976946573675678719L;
+    @XmlElement(name = "id")
     private long id;
+    @XmlElement(name = "uri")
     private String uri;
+    @XmlElement(name = "url")
     private String url;
+    @XmlElement(name = "account")
     private Account account;
-    private long inReplyToId;
-    private long inReplyToAccountId;
+    @XmlElement(name = "in_reply_to_id")
+    private Long inReplyToId;
+    @XmlElement(name = "in_reply_to_account_id")
+    private Long inReplyToAccountId;
+    @XmlElement(name = "reblog")
     private Status reblog;
+    @XmlElement(name = "content")
     private String content;
+    @XmlElement(name = "created_at")
     private long createdAt;
+    @XmlElement(name = "reblogs_count")
     private long reblogsCount;
+    @XmlElement(name = "favourites_count")
     private long favouritesCount;
+    @XmlElement(name = "reblogged")
     private boolean reblogged;
+    @XmlElement(name = "favourited")
     private boolean favourited;
+    @XmlElement(name = "sensitive")
     private boolean sensitive;
+    @XmlElement(name = "spoiler_text")
     private String spoilerText;
+    @XmlElement(name = "visibility")
     private String visibility;
+    @XmlElement(name = "media_attachments")
     private Attachment[] mediaAttachments;
+    @XmlElement(name = "mentions")
     private Mention[] mentions;
+    @XmlElement(name = "tags")
     private Tag[] tags;
-    private App app;
+    @XmlElement(name = "application")
+    private Application application;
 
     public long getId() {
         return id;
@@ -75,11 +96,11 @@ public class Status implements Serializable {
         this.inReplyToId = inReplyToId;
     }
 
-    public long getInReplyToAccountId() {
+    public Long getInReplyToAccountId() {
         return inReplyToAccountId;
     }
 
-    public void setInReplyToAccountId(long inReplyToAccountId) {
+    public void setInReplyToAccountId(Long inReplyToAccountId) {
         this.inReplyToAccountId = inReplyToAccountId;
     }
 
@@ -187,12 +208,12 @@ public class Status implements Serializable {
         this.tags = tags;
     }
 
-    public App getApp() {
-        return app;
+    public Application getApplication() {
+        return application;
     }
 
-    public void setApp(App app) {
-        this.app = app;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
 }
