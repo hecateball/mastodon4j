@@ -30,6 +30,7 @@ class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> 
         _PropertiesProvider.loadProperties(new File(mastodonLocation.getFile()).listFiles());
         URL location = Thread.currentThread().getContextClassLoader().getResource(".");
         _PropertiesProvider.loadProperties(new File(location.getFile()).listFiles());
+        PROPERTIES.forEach((key, value) -> LOGGER.debug("{}: {}", key, value));
     }
 
     private static void loadProperties(File[] files) {
