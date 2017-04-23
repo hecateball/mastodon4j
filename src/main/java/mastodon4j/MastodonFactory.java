@@ -2,9 +2,6 @@ package mastodon4j;
 
 import com.google.inject.Guice;
 import mastodon4j.internal.__InternalModule;
-import mastodon4j.internal.api.__InternalAPIModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -12,13 +9,11 @@ import org.slf4j.LoggerFactory;
  */
 public final class MastodonFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MastodonFactory.class);
-
     private MastodonFactory() {
     }
 
     public static Mastodon getInstance() {
-        return Guice.createInjector(new __InternalModule(), new __InternalAPIModule())
+        return Guice.createInjector(new __InternalModule())
                 .getInstance(Mastodon.class);
     }
 

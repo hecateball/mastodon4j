@@ -32,7 +32,7 @@ public class Status implements Serializable {
     @XmlElement(name = "content")
     private String content;
     @XmlElement(name = "created_at")
-    private long createdAt;
+    private String createdAt;
     @XmlElement(name = "reblogs_count")
     private long reblogsCount;
     @XmlElement(name = "favourites_count")
@@ -120,11 +120,11 @@ public class Status implements Serializable {
         this.content = content;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

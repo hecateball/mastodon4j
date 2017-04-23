@@ -40,7 +40,7 @@ class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> 
                 if (file.isFile() && PROPERTIES_FILES.contains(file.getName())) {
                     try (InputStream inputStream = Files.newInputStream(path, StandardOpenOption.READ)) {
                         PROPERTIES.load(inputStream);
-                        LOGGER.info("Loaded properties:\t{}", file.getName());
+                        LOGGER.trace("Loaded properties:\t{}", file.getName());
                     }
                 }
                 return FileVisitResult.CONTINUE;
@@ -55,7 +55,6 @@ class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> 
             LOGGER.warn("Exception while loading properties", exception);
         }
         PROPERTIES.forEach((key, value) -> LOGGER.trace("{}: {}", key, value));
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package mastodon4j.internal.api;
+package mastodon4j.internal;
 
 import com.google.inject.Inject;
 import java.util.Properties;

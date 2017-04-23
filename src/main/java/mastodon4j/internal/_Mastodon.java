@@ -1,7 +1,6 @@
 package mastodon4j.internal;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import mastodon4j.Mastodon;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
@@ -32,13 +31,15 @@ import mastodon4j.entity.Relationship;
 import mastodon4j.entity.Report;
 import mastodon4j.entity.Results;
 import mastodon4j.entity.Status;
+import mastodon4j.entity.Tag;
+import mastodon4j.streaming.HashtagStream;
+import mastodon4j.streaming.PublicStream;
 import mastodon4j.streaming.UserStream;
 
 /**
  *
  * @author hecateball
  */
-@Singleton
 class _Mastodon implements Mastodon {
 
     @Inject
@@ -468,24 +469,40 @@ class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public UserStream userEvents() {
-        return this.streaming().userEvents();
+    public UserStream userStream() {
+        return this.streaming().userStream();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void publicStatuses() {
-        this.streaming().publicStatuses();
+    public PublicStream publicStream() {
+        return this.streaming().publicStream();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void hashtagStatuses(String tag) {
-        this.streaming().hashtagStatuses(tag);
+    public PublicStream publicStream(boolean local) {
+        return this.streaming().publicStream(local);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HashtagStream hashtagStream(Tag tag) {
+        return this.streaming().hashtagStream(tag);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HashtagStream hashtagStream(Tag tag, boolean local) {
+        return this.streaming().hashtagStream(tag, local);
     }
 
     /**
