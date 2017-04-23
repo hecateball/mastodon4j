@@ -3,6 +3,7 @@ package mastodon4j.entity;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,11 +15,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Relationship implements Serializable {
 
     private static final long serialVersionUID = -6521826192219144201L;
+    @XmlElement(name = "id")
     private long id;
+    @XmlElement(name = "following")
     private boolean following;
+    @XmlElement(name = "followedBy")
     private boolean followedBy;
+    @XmlElement(name = "blocking")
     private boolean blocking;
+    @XmlElement(name = "muting")
     private boolean muting;
+    @XmlElement(name = "requested")
     private boolean requested;
 
     public long getId() {

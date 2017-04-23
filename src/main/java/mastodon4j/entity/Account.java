@@ -26,7 +26,7 @@ public class Account implements Serializable {
     @XmlElement(name = "locked")
     private boolean locked;
     @XmlElement(name = "created_at")
-    private long createdAt;
+    private String createdAt;
     @XmlElement(name = "followers_count")
     private long followersCount;
     @XmlElement(name = "following_count")
@@ -86,11 +86,11 @@ public class Account implements Serializable {
         this.locked = locked;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

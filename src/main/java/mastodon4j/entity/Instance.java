@@ -3,6 +3,7 @@ package mastodon4j.entity;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,9 +15,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Instance implements Serializable {
 
     private static final long serialVersionUID = -1321033114104569103L;
+    @XmlElement(name = "url")
     private String uri;
+    @XmlElement(name = "title")
     private String title;
+    @XmlElement(name = "description")
     private String description;
+    @XmlElement(name = "email")
     private String email;
 
     public String getUri() {

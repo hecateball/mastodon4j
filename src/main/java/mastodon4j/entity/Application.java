@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-public class App implements Serializable {
+public class Application implements Serializable {
 
     private static final long serialVersionUID = -4842362447331329940L;
     @XmlElement(name = "name")
