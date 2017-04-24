@@ -13,6 +13,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import mastodon4j.Mastodon;
+import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
 import mastodon4j.api.OauthResource;
 import mastodon4j.api.StreamingResource;
@@ -50,6 +51,7 @@ public class __InternalModule extends AbstractModule {
             bind(SSLContext.class).toProvider((Class<? extends Provider<? extends SSLContext>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.SSLContext")));
             bind(HostnameVerifier.class).toProvider((Class<? extends Provider<? extends HostnameVerifier>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.HostnameVerifier")));
             // API Resources
+            bind(AccountsResource.class).to((Class<? extends AccountsResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.AccountsResource")));
             bind(AppsResource.class).to((Class<? extends AppsResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.AppsResource")));
             bind(OauthResource.class).to((Class<? extends OauthResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.OauthResource")));
             bind(StreamingResource.class).to((Class<? extends StreamingResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.StreamingResource")));

@@ -26,6 +26,7 @@ class _AppsResource implements AppsResource {
      */
     @Override
     public ClientCredential registerApplication(Application application, String redirectUris, String scopes) {
+//        try {
         Form form = new Form();
         form.param("client_name", application.getName())
                 .param("redirect_uris", redirectUris)
@@ -33,12 +34,14 @@ class _AppsResource implements AppsResource {
         if (application.getWebsite() != null && !application.getWebsite().isEmpty()) {
             form.param("website", application.getWebsite());
         }
-
         return this.client
                 .target(this.properties.getProperty("mastodon4j.uri"))
                 .path("/api/v1/apps")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.form(form), ClientCredential.class);
+//        } catch (UnsupportedEncodingException exception) {
+//            throw new WebApplicationException(exception);
+//        }
     }
 
 }
