@@ -15,7 +15,8 @@ public interface OauthResource {
      * @param clientSecret
      * @param emailAddress
      * @param password
+     * @param scopes
      * @return an AccessToken
      */
-    public AccessToken issueAccessToken(String clientId, String clientSecret, String emailAddress, String password);
+    public AccessToken issueAccessToken(String clientId, String clientSecret, String emailAddress, String password, String scopes);
 }

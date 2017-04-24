@@ -43,6 +43,8 @@ import mastodon4j.streaming.UserStream;
 class _Mastodon implements Mastodon {
 
     @Inject
+    private AccountsResource accounts;
+    @Inject
     private AppsResource apps;
     @Inject
     private OauthResource oauth;
@@ -51,7 +53,7 @@ class _Mastodon implements Mastodon {
 
     @Override
     public AccountsResource accounts() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.accounts;
     }
 
     @Override
@@ -349,8 +351,8 @@ class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public AccessToken issueAccessToken(String clientId, String clientSecret, String emailAddress, String password) {
-        return this.oauth().issueAccessToken(clientId, clientSecret, emailAddress, password);
+    public AccessToken issueAccessToken(String clientId, String clientSecret, String emailAddress, String password, String scopes) {
+        return this.oauth().issueAccessToken(clientId, clientSecret, emailAddress, password, scopes);
     }
 
     /**

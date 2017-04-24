@@ -21,13 +21,12 @@ class _HashtagStream implements HashtagStream {
     @Override
     public void register(HashtagStreamListener listener) {
         this.eventSource.register(event -> {
-            LOGGER.trace("{}: {}", event.getName(), event.readData());
             switch (event.getName()) {
                 case "update":
                     listener.onUpdate(event.readData(Status.class));
                     break;
                 case "notification":
-                    // Public stream might not receive notification
+                    // Hashtag stream might not receive notification
                     break;
                 case "delete":
                     listener.onDelete(event.readData(Long.class));
