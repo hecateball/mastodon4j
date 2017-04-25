@@ -10,9 +10,11 @@ import org.glassfish.jersey.client.ClientConfig;
  */
 class _ClientConfigProvider implements Provider<ClientConfig>, Supplier<ClientConfig> {
 
+    private static final ClientConfig CLIENT_CONFIG = new ClientConfig();
+
     @Override
     public ClientConfig get() {
-        return new ClientConfig();
+        return CLIENT_CONFIG;
     }
 
 }

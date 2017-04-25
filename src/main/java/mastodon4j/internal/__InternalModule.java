@@ -44,12 +44,12 @@ public class __InternalModule extends AbstractModule {
             // Mastodon instance
             bind(Mastodon.class).to((Class<? extends Mastodon>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.Mastodon"))).asEagerSingleton();
             // System properties
-            bind(Properties.class).toProvider((Class<? extends Provider<? extends Properties>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.Properties")));
+            bind(Properties.class).toProvider((Class<? extends Provider<? extends Properties>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.Properties"))).asEagerSingleton();
             // REST API Clients
-            bind(Client.class).toProvider((Class<? extends Provider<? extends Client>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.Client")));
-            bind(ClientConfig.class).toProvider((Class<? extends Provider<? extends ClientConfig>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.ClientConfig")));
-            bind(SSLContext.class).toProvider((Class<? extends Provider<? extends SSLContext>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.SSLContext")));
-            bind(HostnameVerifier.class).toProvider((Class<? extends Provider<? extends HostnameVerifier>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.HostnameVerifier")));
+            bind(Client.class).toProvider((Class<? extends Provider<? extends Client>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.Client"))).asEagerSingleton();
+            bind(ClientConfig.class).toProvider((Class<? extends Provider<? extends ClientConfig>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.ClientConfig"))).asEagerSingleton();
+            bind(SSLContext.class).toProvider((Class<? extends Provider<? extends SSLContext>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.SSLContext"))).asEagerSingleton();
+            bind(HostnameVerifier.class).toProvider((Class<? extends Provider<? extends HostnameVerifier>>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.provider.HostnameVerifier"))).asEagerSingleton();
             // API Resources
             bind(AccountsResource.class).to((Class<? extends AccountsResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.AccountsResource")));
             bind(AppsResource.class).to((Class<? extends AppsResource>) Class.forName(PROPERTIES.getProperty("mastodon4j.dependency.AppsResource")));
