@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import java.util.Properties;
 import javax.ws.rs.client.Client;
@@ -35,10 +34,7 @@ class _StreamingResource implements StreamingResource {
                 .target(this.properties.getProperty("mastodon4j.uri"))
                 .path("/api/v1/streaming/user");
         EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(UserStream.class).to(_UserStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(UserStream.class);
+        return new _UserStream(source);
     }
 
     /**
@@ -59,13 +55,9 @@ class _StreamingResource implements StreamingResource {
                 .target(this.properties.getProperty("mastodon4j.uri"))
                 .path("/api/v1/streaming/public");
         if (local) {
-            target.path("local");
+            target = target.path("local");
         }
-        EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(PublicStream.class).to(_PublicStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(PublicStream.class);
+        return new _PublicStream(EventSource.target(target).build());
     }
 
     /**
@@ -86,14 +78,10 @@ class _StreamingResource implements StreamingResource {
                 .target(this.properties.getProperty("mastodon4j.uri"))
                 .path("/api/v1/streaming/hashtag");
         if (local) {
-            target.path("local");
+            target = target.path("local");
         }
         target.queryParam("tag", tag.getName());
-        EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(HashtagStream.class).to(_HashtagStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(HashtagStream.class);
+        return new _HashtagStream(EventSource.target(target).build());
     }
 
 }
