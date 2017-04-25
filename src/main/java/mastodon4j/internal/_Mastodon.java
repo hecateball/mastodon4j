@@ -1,6 +1,7 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
+import java.util.Properties;
+import javax.ws.rs.client.Client;
 import mastodon4j.Mastodon;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
@@ -40,16 +41,21 @@ import mastodon4j.streaming.UserStream;
  *
  * @author hecateball
  */
-class _Mastodon implements Mastodon {
+public class _Mastodon implements Mastodon {
 
-    @Inject
-    private AccountsResource accounts;
-    @Inject
-    private AppsResource apps;
-    @Inject
-    private OauthResource oauth;
-    @Inject
-    private StreamingResource streaming;
+    private final AccountsResource accounts;
+    private final AppsResource apps;
+    private final OauthResource oauth;
+    private final StreamingResource streaming;
+
+    public _Mastodon() {
+        Properties properties = new _PropertiesSupplier().get();
+        Client client = new _ClientSupplier().get();
+        this.accounts = new _AccountsResource(properties, client);
+        this.apps = new _AppsResource(properties, client);
+        this.oauth = new _OauthResource(properties, client);
+        this.streaming = new _StreamingResource(properties, client);
+    }
 
     @Override
     public AccountsResource accounts() {

@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import java.util.Properties;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -16,17 +15,19 @@ import mastodon4j.entity.ClientCredential;
  */
 class _AppsResource implements AppsResource {
 
-    @Inject
-    private Properties properties;
-    @Inject
-    private Client client;
+    private final String uri;
+    private final Client client;
+
+    _AppsResource(Properties properties, Client client) {
+        this.uri = properties.getProperty("mastodon4j.uri");
+        this.client = client;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public ClientCredential registerApplication(Application application, String redirectUris, String scopes) {
-//        try {
         Form form = new Form();
         form.param("client_name", application.getName())
                 .param("redirect_uris", redirectUris)
@@ -35,13 +36,11 @@ class _AppsResource implements AppsResource {
             form.param("website", application.getWebsite());
         }
         return this.client
-                .target(this.properties.getProperty("mastodon4j.uri"))
+                .target(this.uri)
                 .path("/api/v1/apps")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.form(form), ClientCredential.class);
-//        } catch (UnsupportedEncodingException exception) {
-//            throw new WebApplicationException(exception);
-//        }
+        //TODO: Error handling
     }
 
 }

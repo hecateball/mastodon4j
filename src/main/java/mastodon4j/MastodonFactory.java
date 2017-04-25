@@ -1,7 +1,6 @@
 package mastodon4j;
 
-import com.google.inject.Guice;
-import mastodon4j.internal.__InternalModule;
+import mastodon4j.internal._Mastodon;
 
 /**
  *
@@ -13,8 +12,7 @@ public final class MastodonFactory {
     }
 
     public static Mastodon getInstance() {
-        return Guice.createInjector(new __InternalModule())
-                .getInstance(Mastodon.class);
+        return new _Mastodon();
     }
 
 }
