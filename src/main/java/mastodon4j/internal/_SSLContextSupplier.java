@@ -1,7 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -19,11 +17,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _SSLContextProvider implements Provider<SSLContext>, Supplier<SSLContext> {
+class _SSLContextSupplier implements Supplier<SSLContext> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(_SSLContextProvider.class);
-    @Inject
-    private Properties properties;
+    private static final Logger LOGGER = LoggerFactory.getLogger(_SSLContextSupplier.class);
+    private final Properties properties;
+
+    _SSLContextSupplier() {
+        this.properties = new _PropertiesSupplier().get();;
+    }
 
     @Override
     public SSLContext get() {

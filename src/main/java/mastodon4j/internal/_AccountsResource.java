@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
@@ -21,20 +20,26 @@ import mastodon4j.entity.Status;
  */
 class _AccountsResource implements AccountsResource {
 
-    @Inject
-    private Properties properties;
-    @Inject
-    private Client client;
+    private final String uri;
+    private final String accessToken;
+    private final Client client;
+
+    _AccountsResource() {
+        Properties properties = new _PropertiesSupplier().get();
+        this.uri = properties.getProperty("mastodon4j.uri");
+        this.accessToken = "Bearer " + properties.getProperty("mastodon4j.accessToken");
+        this.client = new _ClientSupplier().get();
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Account verifyCredentials() {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/verify_credentials")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -59,11 +64,11 @@ class _AccountsResource implements AccountsResource {
      */
     @Override
     public Account getAccount(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", "Bearer " + this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -76,11 +81,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Account[] getFollowers(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/followers")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", "Bearer " + this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -93,11 +98,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Account[] getFollowing(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/following")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -110,11 +115,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Status[] getStatuses(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/statuses")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -127,11 +132,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship follow(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/follow")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -144,11 +149,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship unfollow(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/unfollow")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -161,11 +166,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship block(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/block")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -178,11 +183,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship unblock(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/unblock")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -195,11 +200,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship mute(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/mute")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -212,11 +217,11 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship unmute(long id) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/unmute")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -229,14 +234,13 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Relationship[] relationships(long... ids) {
-        WebTarget target = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        WebTarget target = this.client.target(this.uri)
                 .path("/api/v1/accounts/relationships");
         for (long id : ids) {
             target = target.queryParam("id[]", id);
         }
-        System.out.println(target.getUri().toString());
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -249,14 +253,13 @@ class _AccountsResource implements AccountsResource {
 
     @Override
     public Account[] search(String query, long limit) {
-        Response response = this.client.target(this.properties.getProperty("mastodon4j.uri"))
+        Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/search")
                 .queryParam("q", query)
                 .queryParam("limit", limit)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.properties.getProperty("mastodon4j.accessToken"))
+                .header("Authorization", this.accessToken)
                 .get();
-        System.out.println(response.getStatus());
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
                 return response.readEntity(Account[].class);

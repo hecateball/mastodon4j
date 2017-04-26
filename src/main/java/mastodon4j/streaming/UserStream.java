@@ -6,6 +6,6 @@ package mastodon4j.streaming;
  */
 public interface UserStream extends EventStream {
 
-    public void register(UserStreamListener listener);
+    public UserStream register(UserStreamListener listener);
 
 }

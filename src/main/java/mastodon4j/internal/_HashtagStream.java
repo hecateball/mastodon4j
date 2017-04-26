@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import mastodon4j.entity.Status;
 import mastodon4j.streaming.HashtagStream;
 import mastodon4j.streaming.HashtagStreamListener;
@@ -15,11 +14,15 @@ import org.slf4j.LoggerFactory;
 class _HashtagStream implements HashtagStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_HashtagStream.class);
-    @Inject
-    private EventSource eventSource;
+
+    private final EventSource eventSource;
+
+    public _HashtagStream(EventSource eventSource) {
+        this.eventSource = eventSource;
+    }
 
     @Override
-    public void register(HashtagStreamListener listener) {
+    public HashtagStream register(HashtagStreamListener listener) {
         this.eventSource.register(event -> {
             switch (event.getName()) {
                 case "update":
@@ -35,6 +38,7 @@ class _HashtagStream implements HashtagStream {
                     LOGGER.trace("Unexpected event name: {}", event.getName());
             }
         });
+        return this;
     }
 
     @Override

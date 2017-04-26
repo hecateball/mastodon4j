@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import mastodon4j.entity.Status;
 import mastodon4j.streaming.PublicStream;
 import mastodon4j.streaming.PublicStreamListener;
@@ -15,11 +14,14 @@ import org.slf4j.LoggerFactory;
 class _PublicStream implements PublicStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_PublicStream.class);
-    @Inject
-    private EventSource eventSource;
+    private final EventSource eventSource;
+
+    public _PublicStream(EventSource eventSource) {
+        this.eventSource = eventSource;
+    }
 
     @Override
-    public void register(PublicStreamListener listener) {
+    public PublicStream register(PublicStreamListener listener) {
         this.eventSource.register(event -> {
             switch (event.getName()) {
                 case "update":
@@ -35,6 +37,7 @@ class _PublicStream implements PublicStream {
                     LOGGER.trace("Unexpected event name: {}", event.getName());
             }
         });
+        return this;
     }
 
     @Override

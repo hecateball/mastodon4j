@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import java.util.Properties;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -15,17 +14,20 @@ import mastodon4j.entity.AccessToken;
  */
 class _OauthResource implements OauthResource {
 
-    @Inject
-    private Properties properties;
-    @Inject
-    private Client client;
+    private final String uri;
+    private final Client client;
+
+    public _OauthResource() {
+        Properties properties = new _PropertiesSupplier().get();
+        this.uri = properties.getProperty("mastodon4j.uri");
+        this.client = new _ClientSupplier().get();
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public AccessToken issueAccessToken(String clientId, String clientSecret, String emailAddress, String password, String scopes) {
-        //   try {
         Form form = new Form();
         form.param("client_id", clientId)
                 .param("client_secret", clientSecret)
@@ -34,13 +36,11 @@ class _OauthResource implements OauthResource {
                 .param("scope", scopes)
                 .param("grant_type", "password");
         return this.client
-                .target(this.properties.getProperty("mastodon4j.uri"))
+                .target(this.uri)
                 .path("/oauth/token")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.form(form), AccessToken.class);
-//        } catch (UnsupportedEncodingException exception) {
-//            throw new WebApplicationException(exception);
-//        }
+        //TODO: Error handling
     }
 
 }

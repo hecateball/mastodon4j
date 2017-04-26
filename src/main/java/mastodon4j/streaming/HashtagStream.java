@@ -6,5 +6,5 @@ package mastodon4j.streaming;
  */
 public interface HashtagStream extends EventStream {
 
-    public void register(HashtagStreamListener listener);
+    public HashtagStream register(HashtagStreamListener listener);
 }

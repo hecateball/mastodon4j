@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Provider;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,9 +24,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _PropertiesProvider implements Provider<Properties>, Supplier<Properties> {
+class _PropertiesSupplier implements Supplier<Properties> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(_PropertiesProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(_PropertiesSupplier.class);
     private static final Properties PROPERTIES = new Properties();
     private static final Collection<String> PROPERTIES_FILES
             = Arrays.asList("mastodon4j.properties", "mastodon4j.net.properties");

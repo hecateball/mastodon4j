@@ -1,7 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Guice;
-import com.google.inject.Inject;
 import java.util.Properties;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
@@ -20,25 +18,28 @@ import org.glassfish.jersey.media.sse.EventSource;
  */
 class _StreamingResource implements StreamingResource {
 
-    @Inject
-    private Properties properties;
-    @Inject
-    private Client client;
+    private final String uri;
+    private final Feature feature;
+    private final Client client;
+
+    _StreamingResource() {
+        Properties properties = new _PropertiesSupplier().get();
+        this.uri = properties.getProperty("mastodon4j.uri");
+        this.feature = OAuth2ClientSupport.feature(properties.getProperty("mastodon4j.accessToken"));
+        this.client = new _ClientSupplier().get();
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public UserStream userStream() {
-        Feature feature = OAuth2ClientSupport.feature(this.properties.getProperty("mastodon4j.accessToken"));
-        WebTarget target = this.client.register(feature)
-                .target(this.properties.getProperty("mastodon4j.uri"))
+        WebTarget target = this.client
+                .register(this.feature)
+                .target(this.uri)
                 .path("/api/v1/streaming/user");
         EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(UserStream.class).to(_UserStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(UserStream.class);
+        return new _UserStream(source);
     }
 
     /**
@@ -54,18 +55,14 @@ class _StreamingResource implements StreamingResource {
      */
     @Override
     public PublicStream publicStream(boolean local) {
-        Feature feature = OAuth2ClientSupport.feature(this.properties.getProperty("mastodon4j.accessToken"));
-        WebTarget target = this.client.register(feature)
-                .target(this.properties.getProperty("mastodon4j.uri"))
+        WebTarget target = this.client
+                .register(this.feature)
+                .target(this.uri)
                 .path("/api/v1/streaming/public");
         if (local) {
-            target.path("local");
+            target = target.path("local");
         }
-        EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(PublicStream.class).to(_PublicStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(PublicStream.class);
+        return new _PublicStream(EventSource.target(target).build());
     }
 
     /**
@@ -81,19 +78,15 @@ class _StreamingResource implements StreamingResource {
      */
     @Override
     public HashtagStream hashtagStream(Tag tag, boolean local) {
-        Feature feature = OAuth2ClientSupport.feature(this.properties.getProperty("mastodon4j.accessToken"));
-        WebTarget target = this.client.register(feature)
-                .target(this.properties.getProperty("mastodon4j.uri"))
+        WebTarget target = this.client
+                .register(this.feature)
+                .target(this.uri)
                 .path("/api/v1/streaming/hashtag");
         if (local) {
-            target.path("local");
+            target = target.path("local");
         }
-        target.queryParam("tag", tag.getName());
-        EventSource source = EventSource.target(target).build();
-        return Guice.createInjector(binder -> {
-            binder.bind(HashtagStream.class).to(_HashtagStream.class);
-            binder.bind(EventSource.class).toInstance(source);
-        }).getInstance(HashtagStream.class);
+        target = target.queryParam("tag", tag.getName());
+        return new _HashtagStream(EventSource.target(target).build());
     }
 
 }

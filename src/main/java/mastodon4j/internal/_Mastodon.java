@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import com.google.inject.Inject;
 import mastodon4j.Mastodon;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
@@ -40,16 +39,21 @@ import mastodon4j.streaming.UserStream;
  *
  * @author hecateball
  */
-class _Mastodon implements Mastodon {
+public class _Mastodon implements Mastodon {
 
-    @Inject
-    private AccountsResource accounts;
-    @Inject
-    private AppsResource apps;
-    @Inject
-    private OauthResource oauth;
-    @Inject
-    private StreamingResource streaming;
+    private final AccountsResource accounts;
+    private final AppsResource apps;
+    private final BlocksResource blocks;
+    private final OauthResource oauth;
+    private final StreamingResource streaming;
+
+    public _Mastodon() {
+        this.accounts = new _AccountsResource();
+        this.apps = new _AppsResource();
+        this.blocks = new _BlocksResource();
+        this.oauth = new _OauthResource();
+        this.streaming = new _StreamingResource();
+    }
 
     @Override
     public AccountsResource accounts() {
@@ -63,7 +67,7 @@ class _Mastodon implements Mastodon {
 
     @Override
     public BlocksResource blocks() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.blocks;
     }
 
     @Override
