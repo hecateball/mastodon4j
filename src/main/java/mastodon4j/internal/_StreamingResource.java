@@ -22,10 +22,11 @@ class _StreamingResource implements StreamingResource {
     private final Feature feature;
     private final Client client;
 
-    _StreamingResource(Properties properties, Client client) {
+    _StreamingResource() {
+        Properties properties = new _PropertiesSupplier().get();
         this.uri = properties.getProperty("mastodon4j.uri");
         this.feature = OAuth2ClientSupport.feature(properties.getProperty("mastodon4j.accessToken"));
-        this.client = client;
+        this.client = new _ClientSupplier().get();
     }
 
     /**

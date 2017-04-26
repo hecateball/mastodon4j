@@ -1,7 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
-import javax.ws.rs.client.Client;
 import mastodon4j.Mastodon;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
@@ -45,16 +43,16 @@ public class _Mastodon implements Mastodon {
 
     private final AccountsResource accounts;
     private final AppsResource apps;
+    private final BlocksResource blocks;
     private final OauthResource oauth;
     private final StreamingResource streaming;
 
     public _Mastodon() {
-        Properties properties = new _PropertiesSupplier().get();
-        Client client = new _ClientSupplier().get();
-        this.accounts = new _AccountsResource(properties, client);
-        this.apps = new _AppsResource(properties, client);
-        this.oauth = new _OauthResource(properties, client);
-        this.streaming = new _StreamingResource(properties, client);
+        this.accounts = new _AccountsResource();
+        this.apps = new _AppsResource();
+        this.blocks = new _BlocksResource();
+        this.oauth = new _OauthResource();
+        this.streaming = new _StreamingResource();
     }
 
     @Override
@@ -69,7 +67,7 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public BlocksResource blocks() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.blocks;
     }
 
     @Override

@@ -24,10 +24,11 @@ class _AccountsResource implements AccountsResource {
     private final String accessToken;
     private final Client client;
 
-    _AccountsResource(Properties properties, Client client) {
+    _AccountsResource() {
+        Properties properties = new _PropertiesSupplier().get();
         this.uri = properties.getProperty("mastodon4j.uri");
         this.accessToken = "Bearer " + properties.getProperty("mastodon4j.accessToken");
-        this.client = client;
+        this.client = new _ClientSupplier().get();
     }
 
     /**

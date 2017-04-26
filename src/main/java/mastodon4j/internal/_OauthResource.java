@@ -17,9 +17,10 @@ class _OauthResource implements OauthResource {
     private final String uri;
     private final Client client;
 
-    public _OauthResource(Properties properties, Client client) {
+    public _OauthResource() {
+        Properties properties = new _PropertiesSupplier().get();
         this.uri = properties.getProperty("mastodon4j.uri");
-        this.client = client;
+        this.client = new _ClientSupplier().get();
     }
 
     /**

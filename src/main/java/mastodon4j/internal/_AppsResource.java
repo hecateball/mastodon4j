@@ -18,9 +18,10 @@ class _AppsResource implements AppsResource {
     private final String uri;
     private final Client client;
 
-    _AppsResource(Properties properties, Client client) {
+    _AppsResource() {
+        Properties properties = new _PropertiesSupplier().get();
         this.uri = properties.getProperty("mastodon4j.uri");
-        this.client = client;
+        this.client = new _ClientSupplier().get();
     }
 
     /**
