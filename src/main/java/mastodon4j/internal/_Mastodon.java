@@ -44,6 +44,9 @@ public class _Mastodon implements Mastodon {
     private final AccountsResource accounts;
     private final AppsResource apps;
     private final BlocksResource blocks;
+    private final FavouritesResource favourites;
+    private final FollowRequestsResource followRequests;
+    private final FollowsResource follows;
     private final OauthResource oauth;
     private final StreamingResource streaming;
 
@@ -51,6 +54,9 @@ public class _Mastodon implements Mastodon {
         this.accounts = new _AccountsResource();
         this.apps = new _AppsResource();
         this.blocks = new _BlocksResource();
+        this.favourites = new _FavouritesResource();
+        this.followRequests = new _FollowRequestsResource();
+        this.follows = new _FollowsResource();
         this.oauth = new _OauthResource();
         this.streaming = new _StreamingResource();
     }
@@ -72,7 +78,7 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public FavouritesResource favourites() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.favourites;
     }
 
     @Override
