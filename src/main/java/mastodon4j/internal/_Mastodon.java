@@ -44,6 +44,11 @@ public class _Mastodon implements Mastodon {
     private final AccountsResource accounts;
     private final AppsResource apps;
     private final BlocksResource blocks;
+    private final FavouritesResource favourites;
+    private final FollowRequestsResource followRequests;
+    private final FollowsResource follows;
+    private final InstancesResource instances;
+    private final MediaResource media;
     private final OauthResource oauth;
     private final StreamingResource streaming;
 
@@ -51,6 +56,11 @@ public class _Mastodon implements Mastodon {
         this.accounts = new _AccountsResource();
         this.apps = new _AppsResource();
         this.blocks = new _BlocksResource();
+        this.favourites = new _FavouritesResource();
+        this.followRequests = new _FollowRequestsResource();
+        this.follows = new _FollowsResource();
+        this.instances = new _InstancesResource();
+        this.media = new _MediaResource();
         this.oauth = new _OauthResource();
         this.streaming = new _StreamingResource();
     }
@@ -72,27 +82,27 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public FavouritesResource favourites() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.favourites;
     }
 
     @Override
     public FollowRequestsResource followRequests() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.followRequests;
     }
 
     @Override
     public FollowsResource follows() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.follows;
     }
 
     @Override
     public InstancesResource instances() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.instances;
     }
 
     @Override
     public MediaResource media() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.media;
     }
 
     @Override
