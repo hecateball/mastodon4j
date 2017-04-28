@@ -49,8 +49,14 @@ public class _Mastodon implements Mastodon {
     private final FollowsResource follows;
     private final InstancesResource instances;
     private final MediaResource media;
+    private final MutesResource mutes;
+    private final NotificationsResource notifications;
     private final OauthResource oauth;
+    private final ReportsResource reports;
+    private final SearchResource search;
+    private final StatusesResource statuses;
     private final StreamingResource streaming;
+    private final TimelinesResource timelines;
 
     public _Mastodon() {
         this.accounts = new _AccountsResource();
@@ -61,8 +67,14 @@ public class _Mastodon implements Mastodon {
         this.follows = new _FollowsResource();
         this.instances = new _InstancesResource();
         this.media = new _MediaResource();
+        this.mutes = new _MutesResource();
+        this.notifications = new _NotificationsResource();
         this.oauth = new _OauthResource();
+        this.reports = new _ReportsResource();
+        this.search = new _SearchResource();
+        this.statuses = new _StatusesResource();
         this.streaming = new _StreamingResource();
+        this.timelines = new _TimelinesResource();
     }
 
     @Override
@@ -107,12 +119,12 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public MutesResource mutes() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.mutes;
     }
 
     @Override
     public NotificationsResource notifications() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.notifications;
     }
 
     @Override
@@ -122,17 +134,17 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public ReportsResource reports() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.reports;
     }
 
     @Override
     public SearchResource search() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.search;
     }
 
     @Override
     public StatusesResource statuses() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.statuses;
     }
 
     @Override
@@ -142,7 +154,7 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public TimelinesResource timelines() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.timelines;
     }
 
     /**
@@ -469,16 +481,16 @@ public class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Status favourites(long id) {
-        return this.statuses().favourites(id);
+    public Status favourite(long id) {
+        return this.statuses().favourite(id);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Status unfavourites(long id) {
-        return this.statuses().unfavourites(id);
+    public Status unfavourite(long id) {
+        return this.statuses().unfavourite(id);
     }
 
     /**
@@ -541,8 +553,8 @@ public class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Status[] getTagTimeline(String hashtag, boolean local) {
-        return this.timelines().getTagTimeline(hashtag, local);
+    public Status[] getHashtagTimeline(String hashtag, boolean local) {
+        return this.timelines().getHashtagTimeline(hashtag, local);
     }
 
 }

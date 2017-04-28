@@ -30,5 +30,5 @@ public interface TimelinesResource {
      * @param local (optional) only return statuses originating from this instance
      * @return an array of Statuses, most recent ones first
      */
-    public Status[] getTagTimeline(String hashtag, boolean local);
+    public Status[] getHashtagTimeline(String hashtag, boolean local);
 }

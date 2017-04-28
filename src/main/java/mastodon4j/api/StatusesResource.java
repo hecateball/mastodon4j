@@ -91,7 +91,7 @@ public interface StatusesResource {
      * @param id
      * @return
      */
-    public Status favourites(long id);
+    public Status favourite(long id);
 
     /**
      * Unfavouriting a status.
@@ -99,5 +99,5 @@ public interface StatusesResource {
      * @param id
      * @return
      */
-    public Status unfavourites(long id);
+    public Status unfavourite(long id);
 }
