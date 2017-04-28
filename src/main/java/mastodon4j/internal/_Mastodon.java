@@ -52,6 +52,9 @@ public class _Mastodon implements Mastodon {
     private final MutesResource mutes;
     private final NotificationsResource notifications;
     private final OauthResource oauth;
+    private final ReportsResource reports;
+    private final SearchResource search;
+    private final StatusesResource statuses;
     private final StreamingResource streaming;
 
     public _Mastodon() {
@@ -66,7 +69,11 @@ public class _Mastodon implements Mastodon {
         this.mutes = new _MutesResource();
         this.notifications = new _NotificationsResource();
         this.oauth = new _OauthResource();
+        this.reports = new _ReportsResource();
+        this.search = new _SearchResource();
+        this.statuses = new _StatusesResource();
         this.streaming = new _StreamingResource();
+
     }
 
     @Override
@@ -126,17 +133,17 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public ReportsResource reports() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.reports;
     }
 
     @Override
     public SearchResource search() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.search;
     }
 
     @Override
     public StatusesResource statuses() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.statuses;
     }
 
     @Override
