@@ -33,7 +33,7 @@ public class _StatusesResource implements StatusesResource {
     @Override
     public Status getStatus(long id) {
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses/{id}")
+                .path("/api/v1/statuses/{id}")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -49,7 +49,7 @@ public class _StatusesResource implements StatusesResource {
     @Override
     public Context getContext(long id) {
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses/{id}/context")
+                .path("/api/v1/statuses/{id}/context")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -65,7 +65,7 @@ public class _StatusesResource implements StatusesResource {
     @Override
     public Card getCard(long id) {
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses/{id}/card")
+                .path("/api/v1/statuses/{id}/card")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -82,7 +82,7 @@ public class _StatusesResource implements StatusesResource {
     public Account[] getRebloggedBy(long id) {
         //TODO: need to support: max_id, since_id, limit
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses/{id}/reblogged_by")
+                .path("/api/v1/statuses/{id}/reblogged_by")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -99,7 +99,7 @@ public class _StatusesResource implements StatusesResource {
     public Account[] getFavouritedBy(long id) {
         //TODO: need to support: max_id, since_id, limit
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses/{id}/favourited_by")
+                .path("/api/v1/statuses/{id}/favourited_by")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -115,20 +115,14 @@ public class _StatusesResource implements StatusesResource {
     @Override
     public Status postStatus(String status, long inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility) {
         //TODO: Support other parameters
-        Form form = new Form()
-                .param("status", status)
-                .param("sensitive", String.valueOf(false))
-                .param("visibility", visibility);
-
+        Form form = new Form("status", status);
         Response response = this.client.target(this.uri)
-                .path("/api/v1/stauses")
+                .path("/api/v1/statuses")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", this.accessToken)
                 .post(Entity.form(form));
-        System.out.println(response.getStatus());
-        System.out.println(response.readEntity(String.class));
-        switch (response.getStatus()) {
-            case 200:
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
                 return response.readEntity(Status.class);
             default:
                 mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
@@ -138,27 +132,87 @@ public class _StatusesResource implements StatusesResource {
 
     @Override
     public void deleteStatus(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/statuses/{id}")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .delete();
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return;
+            default:
+                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
     @Override
     public Status reblog(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/statuses/{id}/reblog")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .post(null);
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return response.readEntity(Status.class);
+            default:
+                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
     @Override
     public Status unreblog(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/statuses/{id}/unreblog")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .post(null);
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return response.readEntity(Status.class);
+            default:
+                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
     @Override
-    public Status favourites(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Status favourite(long id) {
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/statuses/{id}/favourite")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .post(null);
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return response.readEntity(Status.class);
+            default:
+                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
     @Override
-    public Status unfavourites(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Status unfavourite(long id) {
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/statuses/{id}/unfavourite")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .post(null);
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return response.readEntity(Status.class);
+            default:
+                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
 }

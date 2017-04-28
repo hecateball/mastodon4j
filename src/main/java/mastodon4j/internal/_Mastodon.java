@@ -480,16 +480,16 @@ public class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Status favourites(long id) {
-        return this.statuses().favourites(id);
+    public Status favourite(long id) {
+        return this.statuses().favourite(id);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Status unfavourites(long id) {
-        return this.statuses().unfavourites(id);
+    public Status unfavourite(long id) {
+        return this.statuses().unfavourite(id);
     }
 
     /**
