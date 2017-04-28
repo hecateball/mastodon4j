@@ -56,6 +56,7 @@ public class _Mastodon implements Mastodon {
     private final SearchResource search;
     private final StatusesResource statuses;
     private final StreamingResource streaming;
+    private final TimelinesResource timelines;
 
     public _Mastodon() {
         this.accounts = new _AccountsResource();
@@ -73,7 +74,7 @@ public class _Mastodon implements Mastodon {
         this.search = new _SearchResource();
         this.statuses = new _StatusesResource();
         this.streaming = new _StreamingResource();
-
+        this.timelines = new _TimelinesResource();
     }
 
     @Override
@@ -153,7 +154,7 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public TimelinesResource timelines() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.timelines;
     }
 
     /**
@@ -552,8 +553,8 @@ public class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Status[] getTagTimeline(String hashtag, boolean local) {
-        return this.timelines().getTagTimeline(hashtag, local);
+    public Status[] getHashtagTimeline(String hashtag, boolean local) {
+        return this.timelines().getHashtagTimeline(hashtag, local);
     }
 
 }
