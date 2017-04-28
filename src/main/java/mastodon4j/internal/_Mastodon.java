@@ -49,6 +49,7 @@ public class _Mastodon implements Mastodon {
     private final FollowsResource follows;
     private final InstancesResource instances;
     private final MediaResource media;
+    private final MutesResource mutes;
     private final OauthResource oauth;
     private final StreamingResource streaming;
 
@@ -61,6 +62,7 @@ public class _Mastodon implements Mastodon {
         this.follows = new _FollowsResource();
         this.instances = new _InstancesResource();
         this.media = new _MediaResource();
+        this.mutes = new _MutesResource();
         this.oauth = new _OauthResource();
         this.streaming = new _StreamingResource();
     }
@@ -107,7 +109,7 @@ public class _Mastodon implements Mastodon {
 
     @Override
     public MutesResource mutes() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.mutes;
     }
 
     @Override
