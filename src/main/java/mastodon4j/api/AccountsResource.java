@@ -26,8 +26,9 @@ public interface AccountsResource {
      * data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @param header a base64 encoded image to display as the user's header image (e.g.
      * data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
+     * @return the updated Account
      */
-    public void updateCredentials(String displayName, String note, String avatar, String header);
+    public Account updateCredentials(String displayName, String note, String avatar, String header);
 
     /**
      * Fetching an account.

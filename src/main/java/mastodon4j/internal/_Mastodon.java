@@ -169,8 +169,8 @@ public class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public void updateCredentials(String displayName, String note, String avatar, String header) {
-        this.accounts().updateCredentials(displayName, note, avatar, header);
+    public Account updateCredentials(String displayName, String note, String avatar, String header) {
+        return this.accounts().updateCredentials(displayName, note, avatar, header);
     }
 
     /**
