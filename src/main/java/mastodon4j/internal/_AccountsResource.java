@@ -3,6 +3,7 @@ package mastodon4j.internal;
 import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
@@ -54,9 +55,24 @@ class _AccountsResource implements AccountsResource {
      * {@inheritDoc}
      */
     @Override
-    public void updateCredentials(String displayName, String note, String avatar, String header) {
-        Form form = new Form();
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Account updateCredentials(String displayName, String note, String avatar, String header) {
+        Form form = new Form()
+                .param("display_name", displayName)
+                .param("note", note)
+                .param("avatar", avatar)
+                .param("header", header);
+        Response response = this.client.target(this.uri)
+                .path("/api/v1/accounts/update_credentials")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", this.accessToken)
+                .method("PATCH", Entity.form(form));
+        switch (Response.Status.fromStatusCode(response.getStatus())) {
+            case OK:
+                return response.readEntity(Account.class);
+            default:
+                Error error = response.readEntity(Error.class);
+                throw new WebApplicationException(error.getError(), response.getStatus());
+        }
     }
 
     /**
@@ -79,6 +95,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Account[] getFollowers(long id) {
         Response response = this.client.target(this.uri)
@@ -96,6 +115,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Account[] getFollowing(long id) {
         Response response = this.client.target(this.uri)
@@ -113,6 +135,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Status[] getStatuses(long id) {
         Response response = this.client.target(this.uri)
@@ -130,6 +155,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship follow(long id) {
         Response response = this.client.target(this.uri)
@@ -147,6 +175,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship unfollow(long id) {
         Response response = this.client.target(this.uri)
@@ -164,6 +195,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship block(long id) {
         Response response = this.client.target(this.uri)
@@ -181,6 +215,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship unblock(long id) {
         Response response = this.client.target(this.uri)
@@ -198,6 +235,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship mute(long id) {
         Response response = this.client.target(this.uri)
@@ -215,6 +255,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship unmute(long id) {
         Response response = this.client.target(this.uri)
@@ -232,6 +275,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Relationship[] relationships(long... ids) {
         WebTarget target = this.client.target(this.uri)
@@ -251,6 +297,9 @@ class _AccountsResource implements AccountsResource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Account[] search(String query, long limit) {
         Response response = this.client.target(this.uri)
