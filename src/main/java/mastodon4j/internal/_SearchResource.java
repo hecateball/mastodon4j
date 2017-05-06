@@ -12,7 +12,7 @@ import mastodon4j.entity.Results;
  *
  * @author hecateball
  */
-class _SearchResource implements SearchResource {
+final class _SearchResource implements SearchResource {
 
     private final String uri;
     private final Client client;

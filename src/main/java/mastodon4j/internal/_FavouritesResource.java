@@ -12,7 +12,7 @@ import mastodon4j.entity.Status;
  *
  * @author hecateball
  */
-class _FavouritesResource implements FavouritesResource {
+final class _FavouritesResource implements FavouritesResource {
 
     private final String uri;
     private final String accessToken;

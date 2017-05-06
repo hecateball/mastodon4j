@@ -39,7 +39,7 @@ import mastodon4j.streaming.UserStream;
  *
  * @author hecateball
  */
-public class _Mastodon implements Mastodon {
+public final class _Mastodon implements Mastodon {
 
     private final AccountsResource accounts;
     private final AppsResource apps;

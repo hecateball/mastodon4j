@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _HashtagStream implements HashtagStream {
+final class _HashtagStream implements HashtagStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_HashtagStream.class);
 

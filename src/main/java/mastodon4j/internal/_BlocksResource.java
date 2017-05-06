@@ -12,7 +12,7 @@ import mastodon4j.entity.Account;
  *
  * @author hecateball
  */
-class _BlocksResource implements BlocksResource {
+final class _BlocksResource implements BlocksResource {
 
     private final String uri;
     private final String accessToken;

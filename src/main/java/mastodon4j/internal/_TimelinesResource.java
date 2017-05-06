@@ -12,7 +12,7 @@ import mastodon4j.entity.Status;
  *
  * @author hecateball
  */
-class _TimelinesResource implements TimelinesResource {
+final class _TimelinesResource implements TimelinesResource {
 
     private final String uri;
     private final String accessToken;

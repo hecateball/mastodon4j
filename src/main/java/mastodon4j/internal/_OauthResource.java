@@ -12,7 +12,7 @@ import mastodon4j.entity.AccessToken;
  *
  * @author hecateball
  */
-class _OauthResource implements OauthResource {
+final class _OauthResource implements OauthResource {
 
     private final String uri;
     private final Client client;

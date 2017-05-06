@@ -9,7 +9,7 @@ import javax.ws.rs.client.ClientBuilder;
  *
  * @author hecateball
  */
-class _ClientSupplier implements Supplier<Client> {
+final class _ClientSupplier implements Supplier<Client> {
 
     private static Client client;
 

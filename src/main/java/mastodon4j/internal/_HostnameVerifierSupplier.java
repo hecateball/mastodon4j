@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _HostnameVerifierSupplier implements Supplier<HostnameVerifier> {
+final class _HostnameVerifierSupplier implements Supplier<HostnameVerifier> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_HostnameVerifierSupplier.class);
 

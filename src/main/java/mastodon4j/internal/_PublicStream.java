@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _PublicStream implements PublicStream {
+final class _PublicStream implements PublicStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_PublicStream.class);
     private final EventSource eventSource;

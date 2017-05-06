@@ -12,7 +12,7 @@ import mastodon4j.entity.Account;
  *
  * @author hecateball
  */
-class _FollowRequestsResource implements FollowRequestsResource {
+final class _FollowRequestsResource implements FollowRequestsResource {
 
     private final String uri;
     private final String accessToken;
