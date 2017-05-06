@@ -1,6 +1,7 @@
 package mastodon4j.internal;
 
 import mastodon4j.Mastodon;
+import mastodon4j.Range;
 import mastodon4j.api.AccountsResource;
 import mastodon4j.api.AppsResource;
 import mastodon4j.api.BlocksResource;
@@ -193,6 +194,14 @@ public final class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
+    public Account[] getFollowers(long id, Range range) {
+        return this.accounts().getFollowers(id, range);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Account[] getFollowing(long id) {
         return this.accounts().getFollowing(id);
     }
@@ -201,8 +210,32 @@ public final class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
+    public Account[] getFollowing(long id, Range range) {
+        return this.accounts().getFollowing(id, range);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Status[] getStatuses(long id) {
         return this.accounts().getStatuses(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Status[] getStatuses(long id, Range range) {
+        return this.accounts().getStatuses(id, range);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Status[] getStatuses(long id, boolean onlyMedia, boolean excluedeReplies, Range range) {
+        return this.accounts().getStatuses(id, onlyMedia, excluedeReplies, range);
     }
 
     /**
@@ -257,8 +290,8 @@ public final class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Relationship[] relationships(long... ids) {
-        return this.accounts().relationships(ids);
+    public Relationship[] relationships(long id, long... ids) {
+        return this.accounts().relationships(id, ids);
     }
 
     /**
