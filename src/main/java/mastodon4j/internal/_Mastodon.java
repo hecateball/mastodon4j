@@ -294,6 +294,11 @@ public final class _Mastodon implements Mastodon {
         return this.accounts().relationships(id, ids);
     }
 
+    @Override
+    public Account[] search(String query) {
+        return this.accounts().search(query);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -316,6 +321,11 @@ public final class _Mastodon implements Mastodon {
     @Override
     public Account[] getBlocks() {
         return this.blocks().getBlocks();
+    }
+
+    @Override
+    public Account[] getBlocks(Range range) {
+        return this.blocks().getBlocks(range);
     }
 
     /**

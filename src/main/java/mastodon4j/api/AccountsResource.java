@@ -162,6 +162,15 @@ public interface AccountsResource {
      * Searching for accounts.
      *
      * @param query what to search for
+     * @return an array of matching Accounts. Will lookup an account remotely if the search term is in the
+     * username@domain format and not yet in the database.
+     */
+    public Account[] search(String query);
+
+    /**
+     * Searching for accounts.
+     *
+     * @param query what to search for
      * @param limit maximum number of matching accounts to return (default: 40)
      * @return an array of matching Accounts. Will lookup an account remotely if the search term is in the
      * username@domain format and not yet in the database.

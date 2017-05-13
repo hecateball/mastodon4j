@@ -22,6 +22,7 @@ import mastodon4j.entity.Status;
  */
 final class _AccountsResource implements AccountsResource {
 
+    private static final long DEFAULT_LIMIT = 40;
     private final String uri;
     private final String accessToken;
     private final Client client;
@@ -195,6 +196,12 @@ final class _AccountsResource implements AccountsResource {
         WebTarget target = this.client.target(this.uri)
                 .path("/api/v1/accounts/{id}/statuses")
                 .resolveTemplate("id", id);
+        if (onlyMedia) {
+            target = target.queryParam("only_media", onlyMedia);
+        }
+        if (excluedeReplies) {
+            target = target.queryParam("exclude_replies", excluedeReplies);
+        }
         if (range != null) {
             if (range.getLimit().isPresent()) {
                 target = target.queryParam("limit", range.getLimit().get());
@@ -206,9 +213,7 @@ final class _AccountsResource implements AccountsResource {
                 target = target.queryParam("max_id", range.getMaxId().get());
             }
         }
-        Response response = target.queryParam("only_media", onlyMedia)
-                .queryParam("exclude_replies", excluedeReplies)
-                .request(MediaType.APPLICATION_JSON)
+        Response response = target.request(MediaType.APPLICATION_JSON)
                 .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
@@ -363,6 +368,11 @@ final class _AccountsResource implements AccountsResource {
                 Error error = response.readEntity(Error.class);
                 throw new WebApplicationException(error.getError(), response.getStatus());
         }
+    }
+
+    @Override
+    public Account[] search(String query) {
+        return this.search(query, DEFAULT_LIMIT);
     }
 
     /**
