@@ -19,6 +19,7 @@ public interface BlocksResource {
     /**
      * Fetching a user's blocks.
      *
+     * @param range
      * @return an array of Accounts blocked by the authenticated user
      */
     public Account[] getBlocks(Range range);

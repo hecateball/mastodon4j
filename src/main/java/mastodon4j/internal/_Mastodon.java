@@ -340,6 +340,14 @@ public final class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
+    public Status[] getFavourites(Range range) {
+        return this.favourites().getFavourites(range);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Account[] getFollowRequests() {
         return this.followRequests().getFollowRequests();
     }

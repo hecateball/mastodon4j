@@ -29,19 +29,7 @@ final class _BlocksResource implements BlocksResource {
 
     @Override
     public Account[] getBlocks() {
-        //TODO: need to support: max_id, since_id, limit
-        Response response = this.client.target(this.uri)
-                .path("/api/v1/blocks")
-                .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
-                .get();
-        switch (Response.Status.fromStatusCode(response.getStatus())) {
-            case OK:
-                return response.readEntity(Account[].class);
-            default:
-                mastodon4j.entity.Error error = response.readEntity(mastodon4j.entity.Error.class);
-                throw new WebApplicationException(error.getError(), response.getStatus());
-        }
+        return this.getBlocks(null);
     }
 
     @Override
