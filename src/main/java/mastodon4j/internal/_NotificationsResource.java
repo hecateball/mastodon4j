@@ -12,7 +12,7 @@ import mastodon4j.entity.Notification;
  *
  * @author hecateball
  */
-class _NotificationsResource implements NotificationsResource {
+final class _NotificationsResource implements NotificationsResource {
 
     private final String uri;
     private final String accessToken;

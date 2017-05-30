@@ -12,7 +12,7 @@ import mastodon4j.entity.Instance;
  *
  * @author hecateball
  */
-class _InstancesResource implements InstancesResource {
+final class _InstancesResource implements InstancesResource {
 
     private final String uri;
     private final Client client;

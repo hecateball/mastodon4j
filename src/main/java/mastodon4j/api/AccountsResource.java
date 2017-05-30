@@ -1,5 +1,6 @@
 package mastodon4j.api;
 
+import mastodon4j.Range;
 import mastodon4j.entity.Account;
 import mastodon4j.entity.Relationship;
 import mastodon4j.entity.Status;
@@ -47,6 +48,15 @@ public interface AccountsResource {
     public Account[] getFollowers(long id);
 
     /**
+     * Getting an account's followers.
+     *
+     * @param id
+     * @param range
+     * @return an array of Accounts
+     */
+    public Account[] getFollowers(long id, Range range);
+
+    /**
      * Getting who account is following.
      *
      * @param id
@@ -55,12 +65,41 @@ public interface AccountsResource {
     public Account[] getFollowing(long id);
 
     /**
+     * Getting who account is following.
+     *
+     * @param id
+     * @param range
+     * @return an array of Accounts
+     */
+    public Account[] getFollowing(long id, Range range);
+
+    /**
      * Getting an account's statuses.
      *
      * @param id
      * @return an array of Statuses
      */
     public Status[] getStatuses(long id);
+
+    /**
+     * Getting an account's statuses.
+     *
+     * @param id
+     * @param range
+     * @return an array of Statuses
+     */
+    public Status[] getStatuses(long id, Range range);
+
+    /**
+     * Getting an account's statuses.
+     *
+     * @param id
+     * @param onlyMedia
+     * @param excluedeReplies
+     * @param range
+     * @return an array of Statuses
+     */
+    public Status[] getStatuses(long id, boolean onlyMedia, boolean excluedeReplies, Range range);
 
     /**
      * Following an account.
@@ -113,10 +152,20 @@ public interface AccountsResource {
     /**
      * Getting an account's relationships.
      *
+     * @param id
      * @param ids
      * @return an array of Relationships of the current user to a list of given accounts.
      */
-    public Relationship[] relationships(long... ids);
+    public Relationship[] relationships(long id, long... ids);
+
+    /**
+     * Searching for accounts.
+     *
+     * @param query what to search for
+     * @return an array of matching Accounts. Will lookup an account remotely if the search term is in the
+     * username@domain format and not yet in the database.
+     */
+    public Account[] search(String query);
 
     /**
      * Searching for accounts.

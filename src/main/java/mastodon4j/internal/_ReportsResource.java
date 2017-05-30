@@ -16,7 +16,7 @@ import mastodon4j.entity.Report;
  *
  * @author hecateball
  */
-class _ReportsResource implements ReportsResource {
+final class _ReportsResource implements ReportsResource {
 
     private final String uri;
     private final String accessToken;

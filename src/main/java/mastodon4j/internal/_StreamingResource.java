@@ -16,7 +16,7 @@ import org.glassfish.jersey.media.sse.EventSource;
  *
  * @author hecateball
  */
-class _StreamingResource implements StreamingResource {
+final class _StreamingResource implements StreamingResource {
 
     private final String uri;
     private final Feature feature;

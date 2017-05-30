@@ -12,7 +12,7 @@ import mastodon4j.entity.Account;
  *
  * @author hecateball
  */
-class _MutesResource implements MutesResource {
+final class _MutesResource implements MutesResource {
 
     private final String uri;
     private final String accessToken;

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _SSLContextSupplier implements Supplier<SSLContext> {
+final class _SSLContextSupplier implements Supplier<SSLContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_SSLContextSupplier.class);
     private final Properties properties;

@@ -8,7 +8,7 @@ import org.glassfish.jersey.client.HttpUrlConnectorProvider;
  *
  * @author hecateball
  */
-class _ClientConfigSupplier implements Supplier<ClientConfig> {
+final class _ClientConfigSupplier implements Supplier<ClientConfig> {
 
     private static ClientConfig clientConfig;
 

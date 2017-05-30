@@ -14,7 +14,7 @@ import mastodon4j.entity.Account;
  *
  * @author hecateball
  */
-class _FollowsResource implements FollowsResource {
+final class _FollowsResource implements FollowsResource {
 
     private final String uri;
     private final String accessToken;

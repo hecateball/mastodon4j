@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _UserStream implements UserStream {
+final class _UserStream implements UserStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_UserStream.class);
     private final EventSource eventSource;

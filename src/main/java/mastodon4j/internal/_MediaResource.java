@@ -14,7 +14,7 @@ import mastodon4j.entity.Attachment;
  *
  * @author hecateball
  */
-class _MediaResource implements MediaResource {
+final class _MediaResource implements MediaResource {
 
     private final String uri;
     private final String accessToken;

@@ -17,7 +17,7 @@ import mastodon4j.entity.Status;
  *
  * @author hecateball
  */
-public class _StatusesResource implements StatusesResource {
+final class _StatusesResource implements StatusesResource {
 
     private final String uri;
     private final String accessToken;

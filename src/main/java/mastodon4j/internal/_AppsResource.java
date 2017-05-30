@@ -13,7 +13,7 @@ import mastodon4j.entity.ClientCredential;
  *
  * @author hecateball
  */
-class _AppsResource implements AppsResource {
+final class _AppsResource implements AppsResource {
 
     private final String uri;
     private final Client client;

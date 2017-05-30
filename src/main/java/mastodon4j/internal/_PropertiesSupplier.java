@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hecateball
  */
-class _PropertiesSupplier implements Supplier<Properties> {
+final class _PropertiesSupplier implements Supplier<Properties> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_PropertiesSupplier.class);
     private static final Properties PROPERTIES = new Properties();

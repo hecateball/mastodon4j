@@ -3,8 +3,10 @@ package mastodon4j.internal;
 import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import mastodon4j.Range;
 import mastodon4j.api.BlocksResource;
 import mastodon4j.entity.Account;
 
@@ -12,7 +14,7 @@ import mastodon4j.entity.Account;
  *
  * @author hecateball
  */
-class _BlocksResource implements BlocksResource {
+final class _BlocksResource implements BlocksResource {
 
     private final String uri;
     private final String accessToken;
@@ -27,10 +29,25 @@ class _BlocksResource implements BlocksResource {
 
     @Override
     public Account[] getBlocks() {
-        //TODO: need to support: max_id, since_id, limit
-        Response response = this.client.target(this.uri)
-                .path("/api/v1/blocks")
-                .request(MediaType.APPLICATION_JSON)
+        return this.getBlocks(null);
+    }
+
+    @Override
+    public Account[] getBlocks(Range range) {
+        WebTarget target = this.client.target(this.uri)
+                .path("/api/v1/blocks");
+        if (range != null) {
+            if (range.getLimit().isPresent()) {
+                target = target.queryParam("limit", range.getLimit().get());
+            }
+            if (range.getSinceId().isPresent()) {
+                target = target.queryParam("since_id", range.getSinceId().get());
+            }
+            if (range.getMaxId().isPresent()) {
+                target = target.queryParam("max_id", range.getMaxId().get());
+            }
+        }
+        Response response = target.request(MediaType.APPLICATION_JSON)
                 .header("Authorization", this.accessToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
