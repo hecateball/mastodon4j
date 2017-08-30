@@ -3,6 +3,7 @@ package mastodon4j.internal;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -47,10 +48,10 @@ final class _PropertiesSupplier implements Supplier<Properties> {
         };
         try {
             URL mastodonLocation = Mastodon.class.getProtectionDomain().getCodeSource().getLocation();
-            Files.walkFileTree(Paths.get(mastodonLocation.getPath()), visitor);
+            Files.walkFileTree(Paths.get(mastodonLocation.toURI()), visitor);
             URL location = Thread.currentThread().getContextClassLoader().getResource(".");
-            Files.walkFileTree(Paths.get(location.getPath()), visitor);
-        } catch (IOException exception) {
+            Files.walkFileTree(Paths.get(location.toURI()), visitor);
+        } catch (URISyntaxException | IOException exception) {
             LOGGER.warn("Exception while loading properties", exception);
         }
         PROPERTIES.forEach((key, value) -> LOGGER.trace("{}: {}", key, value));
