@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
@@ -15,13 +14,12 @@ import mastodon4j.entity.Notification;
 final class _NotificationsResource implements NotificationsResource {
 
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
-    _NotificationsResource() {
-        Properties properties = new _PropertiesSupplier().get();
-        this.uri = properties.getProperty("mastodon4j.uri");
-        this.accessToken = "Bearer " + properties.getProperty("mastodon4j.accessToken");
+    _NotificationsResource(String uri, String accessToken) {
+        this.uri = uri;
+        this.bearerToken = accessToken;
         this.client = new _ClientSupplier().get();
     }
 
@@ -31,7 +29,7 @@ final class _NotificationsResource implements NotificationsResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/notifications")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -48,7 +46,7 @@ final class _NotificationsResource implements NotificationsResource {
                 .path("/api/v1/notifications/{id}")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -64,7 +62,7 @@ final class _NotificationsResource implements NotificationsResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/notifications/clear")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
