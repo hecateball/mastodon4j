@@ -23,12 +23,12 @@ final class _AccountsResource implements AccountsResource {
 
     private static final long DEFAULT_LIMIT = 40;
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
     _AccountsResource(String uri, String accessToken) {
         this.uri = uri;
-        this.accessToken = accessToken;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
         this.client = new _ClientSupplier().get();
     }
 
@@ -40,7 +40,7 @@ final class _AccountsResource implements AccountsResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/verify_credentials")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -64,7 +64,7 @@ final class _AccountsResource implements AccountsResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/accounts/update_credentials")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .method("PATCH", Entity.form(form));
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -84,7 +84,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.accessToken)
+                .header("Authorization", "Bearer " + this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -123,7 +123,7 @@ final class _AccountsResource implements AccountsResource {
             }
         }
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + this.accessToken)
+                .header("Authorization", "Bearer " + this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -159,7 +159,7 @@ final class _AccountsResource implements AccountsResource {
             }
         }
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -212,7 +212,7 @@ final class _AccountsResource implements AccountsResource {
             }
         }
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -232,7 +232,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/follow")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -252,7 +252,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/unfollow")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -272,7 +272,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/block")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -292,7 +292,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/unblock")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -312,7 +312,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/mute")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -332,7 +332,7 @@ final class _AccountsResource implements AccountsResource {
                 .path("/api/v1/accounts/{id}/unmute")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -357,7 +357,7 @@ final class _AccountsResource implements AccountsResource {
             }
         }
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -383,7 +383,7 @@ final class _AccountsResource implements AccountsResource {
                 .queryParam("q", query)
                 .queryParam("limit", limit)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:

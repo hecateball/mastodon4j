@@ -1,5 +1,6 @@
 package mastodon4j.api;
 
+import java.util.Optional;
 import mastodon4j.entity.Account;
 import mastodon4j.entity.Card;
 import mastodon4j.entity.Context;
@@ -62,7 +63,7 @@ public interface StatusesResource {
      * @param visibility
      * @return the new Status.
      */
-    public Status postStatus(String status, long inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility);
+    public Status postStatus(String status, Optional<Long> inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility);
 
     /**
      * Deleting a status.

@@ -16,12 +16,12 @@ import mastodon4j.entity.Attachment;
 final class _MediaResource implements MediaResource {
 
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
     _MediaResource(String uri, String accessToken) {
         this.uri = uri;
-        this.accessToken = accessToken;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
         this.client = new _ClientSupplier().get();
     }
 
@@ -32,7 +32,7 @@ final class _MediaResource implements MediaResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/favourites")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(Entity.form(form));
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:

@@ -14,12 +14,12 @@ import mastodon4j.entity.Status;
 final class _TimelinesResource implements TimelinesResource {
 
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
     _TimelinesResource(String uri, String accessToken) {
         this.uri = uri;
-        this.accessToken = accessToken;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
         this.client = new _ClientSupplier().get();
     }
 
@@ -29,7 +29,7 @@ final class _TimelinesResource implements TimelinesResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/timelines/home")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -46,7 +46,7 @@ final class _TimelinesResource implements TimelinesResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/timelines/public")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -63,7 +63,7 @@ final class _TimelinesResource implements TimelinesResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/timelines/tag/{hashtag}")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:

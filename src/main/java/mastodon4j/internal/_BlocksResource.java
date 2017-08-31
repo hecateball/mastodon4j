@@ -16,12 +16,12 @@ import mastodon4j.entity.Account;
 final class _BlocksResource implements BlocksResource {
 
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
     _BlocksResource(String uri, String accessToken) {
         this.uri = uri;
-        this.accessToken = accessToken;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
         this.client = new _ClientSupplier().get();
     }
 
@@ -46,7 +46,7 @@ final class _BlocksResource implements BlocksResource {
             }
         }
         Response response = target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:

@@ -1,5 +1,6 @@
 package mastodon4j.internal;
 
+import java.util.Optional;
 import mastodon4j.Mastodon;
 import mastodon4j.Range;
 import mastodon4j.api.AccountsResource;
@@ -500,7 +501,7 @@ public final class _Mastodon implements Mastodon {
      * {@inheritDoc}
      */
     @Override
-    public Status postStatus(String status, long inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility) {
+    public Status postStatus(String status, Optional<Long> inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility) {
         return this.statuses().postStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility);
     }
 

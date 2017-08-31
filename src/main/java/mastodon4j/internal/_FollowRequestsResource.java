@@ -14,12 +14,12 @@ import mastodon4j.entity.Account;
 final class _FollowRequestsResource implements FollowRequestsResource {
 
     private final String uri;
-    private final String accessToken;
+    private final String bearerToken;
     private final Client client;
 
     _FollowRequestsResource(String uri, String accessToken) {
         this.uri = uri;
-        this.accessToken = accessToken;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
         this.client = new _ClientSupplier().get();
     }
 
@@ -29,7 +29,7 @@ final class _FollowRequestsResource implements FollowRequestsResource {
         Response response = this.client.target(this.uri)
                 .path("/api/v1/follow_requests")
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .get();
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -46,7 +46,7 @@ final class _FollowRequestsResource implements FollowRequestsResource {
                 .path("/api/v1/follow_requests/{id}/authorize")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
@@ -63,7 +63,7 @@ final class _FollowRequestsResource implements FollowRequestsResource {
                 .path("/api/v1/follow_requests/{id}/reject")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", this.accessToken)
+                .header("Authorization", this.bearerToken)
                 .post(null);
         switch (Response.Status.fromStatusCode(response.getStatus())) {
             case OK:
