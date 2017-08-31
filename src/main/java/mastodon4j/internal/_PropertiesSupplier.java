@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Properties;
 import java.util.function.Supplier;
-import mastodon4j.Mastodon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,13 +28,13 @@ final class _PropertiesSupplier implements Supplier<Properties> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(_PropertiesSupplier.class);
     private static final Properties PROPERTIES = new Properties();
-    private static final Collection<String> PROPERTIES_FILES
-            = Arrays.asList("mastodon4j.properties", "mastodon4j.net.properties");
+    private static final Collection<String> PROPERTIES_FILES = Arrays.asList("mastodon4j.properties");
 
     static {
         FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) throws IOException {
+                LOGGER.trace("Properties root path: {}", path.toString());
                 File file = path.toFile();
                 if (file.isFile() && PROPERTIES_FILES.contains(file.getName())) {
                     try (InputStream inputStream = Files.newInputStream(path, StandardOpenOption.READ)) {
@@ -47,8 +46,6 @@ final class _PropertiesSupplier implements Supplier<Properties> {
             }
         };
         try {
-            URL mastodonLocation = Mastodon.class.getProtectionDomain().getCodeSource().getLocation();
-            Files.walkFileTree(Paths.get(mastodonLocation.toURI()), visitor);
             URL location = Thread.currentThread().getContextClassLoader().getResource(".");
             Files.walkFileTree(Paths.get(location.toURI()), visitor);
         } catch (URISyntaxException | IOException exception) {
