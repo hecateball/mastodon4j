@@ -59,23 +59,23 @@ public final class _Mastodon implements Mastodon {
     private final StreamingResource streaming;
     private final TimelinesResource timelines;
 
-    public _Mastodon() {
-        this.accounts = new _AccountsResource();
-        this.apps = new _AppsResource();
-        this.blocks = new _BlocksResource();
-        this.favourites = new _FavouritesResource();
-        this.followRequests = new _FollowRequestsResource();
-        this.follows = new _FollowsResource();
-        this.instances = new _InstancesResource();
-        this.media = new _MediaResource();
-        this.mutes = new _MutesResource();
-        this.notifications = new _NotificationsResource();
-        this.oauth = new _OauthResource();
-        this.reports = new _ReportsResource();
-        this.search = new _SearchResource();
-        this.statuses = new _StatusesResource();
-        this.streaming = new _StreamingResource();
-        this.timelines = new _TimelinesResource();
+    public _Mastodon(String uri, String accessToken) {
+        this.accounts = new _AccountsResource(uri, accessToken);
+        this.apps = new _AppsResource(uri);
+        this.blocks = new _BlocksResource(uri, accessToken);
+        this.favourites = new _FavouritesResource(uri, accessToken);
+        this.followRequests = new _FollowRequestsResource(uri, accessToken);
+        this.follows = new _FollowsResource(uri, accessToken);
+        this.instances = new _InstancesResource(uri);
+        this.media = new _MediaResource(uri, accessToken);
+        this.mutes = new _MutesResource(uri, accessToken);
+        this.notifications = new _NotificationsResource(uri, accessToken);
+        this.oauth = new _OauthResource(uri);
+        this.reports = new _ReportsResource(uri, accessToken);
+        this.search = new _SearchResource(uri);
+        this.statuses = new _StatusesResource(uri, accessToken);
+        this.streaming = new _StreamingResource(uri, accessToken);
+        this.timelines = new _TimelinesResource(uri, accessToken);
     }
 
     @Override

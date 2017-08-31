@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
@@ -18,9 +17,8 @@ final class _AppsResource implements AppsResource {
     private final String uri;
     private final Client client;
 
-    _AppsResource() {
-        Properties properties = new _PropertiesSupplier().get();
-        this.uri = properties.getProperty("mastodon4j.uri");
+    _AppsResource(String uri) {
+        this.uri = uri;
         this.client = new _ClientSupplier().get();
     }
 

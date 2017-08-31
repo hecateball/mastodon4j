@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
@@ -18,10 +17,9 @@ final class _FollowRequestsResource implements FollowRequestsResource {
     private final String accessToken;
     private final Client client;
 
-    _FollowRequestsResource() {
-        Properties properties = new _PropertiesSupplier().get();
-        this.uri = properties.getProperty("mastodon4j.uri");
-        this.accessToken = "Bearer " + properties.getProperty("mastodon4j.accessToken");
+    _FollowRequestsResource(String uri, String accessToken) {
+        this.uri = uri;
+        this.accessToken = accessToken;
         this.client = new _ClientSupplier().get();
     }
 

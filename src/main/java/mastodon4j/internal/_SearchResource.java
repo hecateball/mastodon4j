@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
@@ -17,9 +16,8 @@ final class _SearchResource implements SearchResource {
     private final String uri;
     private final Client client;
 
-    _SearchResource() {
-        Properties properties = new _PropertiesSupplier().get();
-        this.uri = properties.getProperty("mastodon4j.uri");
+    _SearchResource(String uri) {
+        this.uri = uri;
         this.client = new _ClientSupplier().get();
     }
 

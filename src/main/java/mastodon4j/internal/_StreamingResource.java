@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Properties;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Feature;
@@ -22,10 +21,9 @@ final class _StreamingResource implements StreamingResource {
     private final Feature feature;
     private final Client client;
 
-    _StreamingResource() {
-        Properties properties = new _PropertiesSupplier().get();
-        this.uri = properties.getProperty("mastodon4j.uri");
-        this.feature = OAuth2ClientSupport.feature(properties.getProperty("mastodon4j.accessToken"));
+    _StreamingResource(String uri, String accessToken) {
+        this.uri = uri;
+        this.feature = OAuth2ClientSupport.feature(accessToken);
         this.client = new _ClientSupplier().get();
     }
 
