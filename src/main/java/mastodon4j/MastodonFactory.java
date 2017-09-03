@@ -1,21 +1,11 @@
 package mastodon4j;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Properties;
+import java.util.stream.Stream;
 import mastodon4j.internal._Mastodon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,35 +17,32 @@ import org.slf4j.LoggerFactory;
 public final class MastodonFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MastodonFactory.class);
-    private static final Collection<String> PROPERTIES_FILES = Arrays.asList("mastodon4j.properties");
+    private static final String MASTODON4J_PROPERTIES = "mastodon4j.properties";
 
     private MastodonFactory() {
     }
 
     public static Mastodon getInstance() {
         Properties properties = new Properties();
-        FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path path, BasicFileAttributes attributes) throws IOException {
-                LOGGER.trace("Properties root path: {}", path.toString());
-                File file = path.toFile();
-                if (file.isFile() && PROPERTIES_FILES.contains(file.getName())) {
-                    try (InputStream inputStream = Files.newInputStream(path, StandardOpenOption.READ)) {
-                        properties.load(inputStream);
-                        LOGGER.trace("Loaded properties:\t{}", file.getName());
-                    }
-                }
-                return FileVisitResult.CONTINUE;
+        File file = new File("." + File.separatorChar + MASTODON4J_PROPERTIES);
+        if (file.exists() && file.isFile()) {
+            try (InputStream stream = new FileInputStream(file)) {
+                properties.load(stream);
+            } catch (IOException exception) {
+                LOGGER.trace("Exception while loading properties", exception);
             }
-        };
-
-        try {
-            URL location = Thread.currentThread().getContextClassLoader().getResource(".");
-            Files.walkFileTree(Paths.get(location.toURI()), visitor);
-        } catch (URISyntaxException | IOException exception) {
-            LOGGER.warn("Exception while loading properties", exception);
         }
-
+        Stream.of("/", "/WEB-INF/", "WEB-INF/")
+                .forEach(path -> {
+                    try (InputStream stream = MastodonFactory.class.getResourceAsStream(path + MASTODON4J_PROPERTIES);) {
+                        if (stream == null) {
+                            return;
+                        }
+                        properties.load(stream);
+                    } catch (IOException exception) {
+                        LOGGER.trace("Exception while loading properties", exception);
+                    }
+                });
         properties.forEach((key, value) -> LOGGER.trace("{}: {}", key, value));
         return MastodonFactory.getInstance(properties);
     }
