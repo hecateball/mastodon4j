@@ -33,8 +33,9 @@ public final class MastodonFactory {
             }
         }
         Stream.of("/", "/WEB-INF/", "WEB-INF/")
+                .map(path -> path + MASTODON4J_PROPERTIES)
                 .forEach(path -> {
-                    try (InputStream stream = MastodonFactory.class.getResourceAsStream(path + MASTODON4J_PROPERTIES);) {
+                    try (InputStream stream = MastodonFactory.class.getResourceAsStream(path)) {
                         if (stream == null) {
                             return;
                         }
