@@ -20,11 +20,35 @@ final class _StreamingResource implements StreamingResource {
     private final String uri;
     private final Feature feature;
     private final Client client;
+    private static UserStream USER_STREAM;
+    private static PublicStream PUBLIC_STREAM;
+    private static PublicStream LOCAL_PUBLIC_STREAM;
 
     _StreamingResource(String uri, String accessToken) {
         this.uri = uri;
         this.feature = OAuth2ClientSupport.feature(accessToken);
         this.client = new _ClientSupplier().get();
+        //User Stream
+        if (_StreamingResource.USER_STREAM == null) {
+            WebTarget userStream = this.client.register(this.feature)
+                    .target(uri)
+                    .path("/api/v1/streaming/user");
+            _StreamingResource.USER_STREAM = new _UserStream(EventSource.target(userStream).build());
+        }
+        //Public Stream
+        if (_StreamingResource.PUBLIC_STREAM == null) {
+            WebTarget publicStream = this.client.register(this.feature)
+                    .target(uri)
+                    .path("/api/v1/streaming/public");
+            _StreamingResource.PUBLIC_STREAM = new _PublicStream(EventSource.target(publicStream).build());
+        }
+        //Local Public Stream
+        if (_StreamingResource.LOCAL_PUBLIC_STREAM == null) {
+            WebTarget locaPublicStream = this.client.register(this.feature)
+                    .target(uri)
+                    .path("/api/v1/streaming/public/local");
+            _StreamingResource.LOCAL_PUBLIC_STREAM = new _PublicStream(EventSource.target(locaPublicStream).build());
+        }
     }
 
     /**
@@ -32,12 +56,7 @@ final class _StreamingResource implements StreamingResource {
      */
     @Override
     public UserStream userStream() {
-        WebTarget target = this.client
-                .register(this.feature)
-                .target(this.uri)
-                .path("/api/v1/streaming/user");
-        EventSource source = EventSource.target(target).build();
-        return new _UserStream(source);
+        return _StreamingResource.USER_STREAM;
     }
 
     /**
@@ -45,7 +64,7 @@ final class _StreamingResource implements StreamingResource {
      */
     @Override
     public PublicStream publicStream() {
-        return this.publicStream(false);
+        return _StreamingResource.PUBLIC_STREAM;
     }
 
     /**
@@ -53,14 +72,7 @@ final class _StreamingResource implements StreamingResource {
      */
     @Override
     public PublicStream publicStream(boolean local) {
-        WebTarget target = this.client
-                .register(this.feature)
-                .target(this.uri)
-                .path("/api/v1/streaming/public");
-        if (local) {
-            target = target.path("local");
-        }
-        return new _PublicStream(EventSource.target(target).build());
+        return local ? _StreamingResource.LOCAL_PUBLIC_STREAM : _StreamingResource.PUBLIC_STREAM;
     }
 
     /**
@@ -76,8 +88,7 @@ final class _StreamingResource implements StreamingResource {
      */
     @Override
     public HashtagStream hashtagStream(Tag tag, boolean local) {
-        WebTarget target = this.client
-                .register(this.feature)
+        WebTarget target = this.client.register(this.feature)
                 .target(this.uri)
                 .path("/api/v1/streaming/hashtag");
         if (local) {

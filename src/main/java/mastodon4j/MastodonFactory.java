@@ -18,11 +18,15 @@ public final class MastodonFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MastodonFactory.class);
     private static final String MASTODON4J_PROPERTIES = "mastodon4j.properties";
+    private static Mastodon SINGLETON;
 
     private MastodonFactory() {
     }
 
     public static Mastodon getInstance() {
+        if (MastodonFactory.SINGLETON != null) {
+            return MastodonFactory.SINGLETON;
+        }
         Properties properties = new Properties();
         File file = new File("." + File.separatorChar + MASTODON4J_PROPERTIES);
         if (file.exists() && file.isFile()) {
@@ -49,11 +53,17 @@ public final class MastodonFactory {
     }
 
     public static Mastodon getInstance(Properties properties) {
+        if (MastodonFactory.SINGLETON != null) {
+            return MastodonFactory.SINGLETON;
+        }
         return MastodonFactory.getInstance(properties.getProperty("mastodon4j.uri"), properties.getProperty("mastodon4j.accessToken"));
     }
 
     public static Mastodon getInstance(String uri, String accessToken) {
-        return new _Mastodon(uri, accessToken);
+        if (MastodonFactory.SINGLETON == null) {
+            MastodonFactory.SINGLETON = new _Mastodon(uri, accessToken);
+        }
+        return MastodonFactory.SINGLETON;
     }
 
 }
