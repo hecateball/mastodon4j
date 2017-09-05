@@ -21,7 +21,7 @@ final class _MediaResource implements MediaResource {
 
     _MediaResource(String uri, String accessToken) {
         this.uri = uri;
-        this.bearerToken = _InternalUtility.getBearerToken(accessToken);;
+        this.bearerToken = _InternalUtility.getBearerToken(accessToken);
         this.client = new _ClientSupplier().get();
     }
 
