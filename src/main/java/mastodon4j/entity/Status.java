@@ -88,11 +88,11 @@ public class Status implements Serializable {
         this.account = account;
     }
 
-    public long getInReplyToId() {
+    public Long getInReplyToId() {
         return inReplyToId;
     }
 
-    public void setInReplyToId(long inReplyToId) {
+    public void setInReplyToId(Long inReplyToId) {
         this.inReplyToId = inReplyToId;
     }
 

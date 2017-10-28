@@ -1,6 +1,5 @@
 package mastodon4j.internal;
 
-import java.util.Optional;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -112,11 +111,20 @@ final class _StatusesResource implements StatusesResource {
     }
 
     @Override
-    public Status postStatus(String status, Optional<Long> inReplyToId, long[] mediaIds, boolean sensitive, String spoilerText, String visibility) {
-        //TODO: Support other parameters
-        Form form = new Form("status", status);
-        if (inReplyToId.isPresent()) {
-            form = form.param("in_reply_to_id", inReplyToId.map(String::valueOf).get());
+    public Status postStatus(Status status) {
+
+        Form form = new Form("status", status.getContent());
+        if (status.getInReplyToId() != null) {
+            form = form.param("in_reply_to_id", String.valueOf(status.getInReplyToId()));
+        }
+        if (status.isSensitive()) {
+            form = form.param("sensitive", "true");
+        }
+        if (status.getSpoilerText() != null && !status.getSpoilerText().isEmpty()) {
+            form = form.param("spoiler_text", status.getSpoilerText());
+        }
+        if (status.getVisibility() != null && !status.getVisibility().isEmpty()) {
+            form = form.param("visibility", status.getVisibility());
         }
         Response response = this.client.target(this.uri)
                 .path("/api/v1/statuses")
