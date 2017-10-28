@@ -112,7 +112,6 @@ final class _StatusesResource implements StatusesResource {
 
     @Override
     public Status postStatus(Status status) {
-
         Form form = new Form("status", status.getContent());
         if (status.getInReplyToId() != null) {
             form = form.param("in_reply_to_id", String.valueOf(status.getInReplyToId()));
@@ -126,6 +125,7 @@ final class _StatusesResource implements StatusesResource {
         if (status.getVisibility() != null && !status.getVisibility().isEmpty()) {
             form = form.param("visibility", status.getVisibility());
         }
+        //TODO: support media_ids
         Response response = this.client.target(this.uri)
                 .path("/api/v1/statuses")
                 .request(MediaType.APPLICATION_JSON)
